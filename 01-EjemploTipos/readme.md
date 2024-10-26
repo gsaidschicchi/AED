@@ -1,11 +1,5 @@
 # Trabajo Práctico 1 - Valores y operaciones de tipos de datos
 
-## Observaciones y aclaraciones
-
-Los integrantes del grupo 7 tuvieron un problema al aceptar la invitación al repositorio. Por esta razón, el sábado 11 de mayo de 2024, enviamos un mail al profesor explicándole la situación.
-
-Para resolverlo, Tomás Griffa, el representante del grupo, quien tuvo el primer acceso al repositorio, realizó la entrega del trabajo práctico. Cada integrante del grupo 7 tiene en su repositorio personal una parte del trabajo, y esas partes fueron integradas en este repositorio para demostrar que todos participaron en la realización del mismo.
-
 ### Objetivo
 
 Demostrar la aplicación de tipos de datos mediante un programa ejemplo con

@@ -1,16 +1,4 @@
-/**
- * @file EjemploTipos.cpp
- * @brief Programa que ejemplifica con pruebas unitarias (assert) las aplicaciones de los tipos de datos.
- * @version 0.1
- * @date 2024-05-04
- * @authors
- * - Tomás Martín, Griffa Benitez
- * - Martín Gerardo, Said Schicchi
- * - Javier Adrian Edgardo, Bogado
- * - Christian Uziel, Bonato
- * - Ivan Juan Carlos, Caceres Rojas
- * - Mauricio Carlos, Choque Quispe
- */
+
 #include <string>
 #include <cassert>
 

@@ -9,6 +9,11 @@ OPERACIONES:
 - GetPerimetro
 */
 
+//Mejoras implementadas//
+
+//1. Validar en funciones getVertice, setVertice, removeVertice si el 'n' esta en el rango. 
+//2. Modularizar el recorrido de las listas con la funcion 'extra' getNodo
+
 #include <iostream>
 #include <math.h>
 using namespace std;
@@ -28,13 +33,14 @@ struct Poligono{
 };
 
 //Prototipos
-void addVertice(Poligono &, Punto); //recibe el 'Poligono' por referencia creado y el 'Punto' a agregar y devuelve nada (modifica el Poligono) 
-Punto getVertice(Poligono,unsigned); //recibe el 'Poligono' creado y elemento de la lista(> 0) y devuelve el 'Punto' 
-void setVertice(Poligono &, Punto, unsigned); // cambia el valor del punto indicado
-void removeVertice(Poligono &, unsigned); //recibe el 'Poligono' por referencia creado y el 'Punto' a remover y devuelve nada (modifica el Poligono)
-unsigned getCantidadLados(Poligono); // premisa, en un poligono simple y cerrado, la cantidad de vertices es igual a la cantidad de lados
+void addVertice(Poligono &, Punto); 
+Punto getVertice(Poligono &, unsigned);  
+void setVertice(Poligono &, Punto, unsigned); 
+void removeVertice(Poligono &, unsigned); 
+unsigned getCantidadLados(Poligono); 
 double getPerimetro(Poligono); 
 
+Nodo *getNodo(Poligono &, unsigned); // funcion complementaria para recorrer listas
 
 int main(){
     return 0;
@@ -60,33 +66,63 @@ void addVertice(Poligono &pol, Punto coordenada){
     }
 }
 
-Punto getVertice(Poligono pol,unsigned n){
-    
-    Nodo *aux = pol.lista; 
-    unsigned contador = 1;
+Punto getVertice(Poligono pol,unsigned n){ // ver cambiar pol pasado por valor a referencia constante 'Punto getVertice(const Poligono &pol,unsigned n)'
 
-    while(n != contador){
-        aux = aux -> siguiente;
-        contador++;
+    unsigned cantidadVertices = getCantidadLados(pol); 
+
+    // valido que el indice este en rango
+    if(n>cantidadVertices || n<1){
+        cout << "Error: indice fuera de rango." << endl;
+        return;
+    } else {
+        Nodo *aux = pol.lista; 
+        unsigned contador = 1;
+
+        while(n != contador){
+            aux = aux -> siguiente;
+            contador++;
     } 
-
     return aux -> dato;
+    }
 }
 
 void setVertice(Poligono &pol, Punto coordenada, unsigned n){
     
-    Nodo *aux = pol.lista;
-    unsigned contador = 1;
+    unsigned cantidadVertices = getCantidadLados(pol);
+    
+    // valido que el indice este en rango
+    if(n>cantidadVertices || n<1){
+        cout << "Error: indice fuera de rango." << endl;
+        return;
 
-    while(n != contador){
-        aux = aux->siguiente;
-        contador++;
+    } else{
+        Nodo *aux = pol.lista;
+        unsigned contador = 1;
+
+        while(n != contador){
+            aux = aux->siguiente;
+            contador++;
+        }
+        aux -> dato = coordenada;
     }
-    aux -> dato = coordenada;
 }
 
 void removeVertice(Poligono &pol, unsigned n){
     
+    //valido si la lista esta vacia
+    if(pol.lista == NULL){
+        cout << "Error: el poligono esta vacio." << endl;
+        return;
+    }
+    
+    unsigned cantidadVertices = getCantidadLados(pol);
+    
+    // valido que el indice este en rango
+    if(n>cantidadVertices || n<1){
+        cout << "Error: indice fuera de rango." << endl;
+        return;
+
+    } else{
     Nodo *aux = pol.lista;
     Nodo *anterior = pol.lista;
     unsigned contador = 1;
@@ -99,7 +135,7 @@ void removeVertice(Poligono &pol, unsigned n){
 
     anterior -> siguiente = aux -> siguiente;
     delete aux;
-
+    }
 }
 
 unsigned getCantidadLados(Poligono pol){
@@ -131,4 +167,22 @@ double getPerimetro(Poligono pol) {
     distanciaAcumulada += sqrt(pow(pol.lista->dato.x - aux->dato.x, 2) + pow(pol.lista->dato.y - aux->dato.y, 2));
 
     return distanciaAcumulada;
+}
+
+// Funcion complementaria
+Nodo* getNodo(Poligono &pol, unsigned n) {
+    Nodo *aux = pol.lista;
+    unsigned contador = 1;
+
+    while (aux != NULL && contador < n) {
+        aux = aux->siguiente;
+        contador++;
+    }
+
+    // Verificar si el índice solicitado coincide exactamente con el nodo
+    if (contador == n) {
+        return aux; // Nodo encontrado
+    } else {
+        return NULL; // Índice fuera de rango
+    }
 }
